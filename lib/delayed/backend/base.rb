@@ -91,7 +91,7 @@ module Delayed
         else
           @payload_object ||= YAML.load(handler)
         end
-      rescue TypeError, LoadError, NameError, ArgumentError => e
+      rescue TypeError, LoadError, NameError, (defined?(Psych::SyntaxError) ? Psych::SyntaxError : nil ), ArgumentError => e
         raise(DeserializationError.new("Job failed to load: #{e.message}. Handler: #{handler.inspect}"))
       end
 
